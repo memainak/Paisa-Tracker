@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PaisaTrack — Delete My Account</title>
+<style>
+  body{font-family:system-ui,sans-serif;max-width:560px;margin:0 auto;padding:24px;line-height:1.6;color:#222}
+  h1{color:#0B6E4F} input,button{font-size:1rem;padding:10px;width:100%;box-sizing:border-box}
+  button{background:#0B6E4F;color:#fff;border:0;border-radius:8px;margin-top:12px;cursor:pointer}
+  .note{background:#f4f7f5;border-radius:8px;padding:12px;font-size:.95rem}
+  #msg{margin-top:16px;font-weight:600}
+</style>
+</head>
+<body>
+<h1>Delete your PaisaTrack account</h1>
+<p>You can delete your account and all data stored on our servers without reinstalling the app.
+Enter the Google email you signed in with; we'll email you a verification link.</p>
+<div class="note">
+<strong>What gets deleted:</strong> your account, email, name, synced expenses, budgets, and consent
+records — everything, including backups, within 30 days. A 7-day grace period applies: signing in to
+the app within 7 days cancels the deletion. Data stored only on your phone is unaffected.
+</div>
+
+<form id="form">
+  <p><label for="email">Email address</label>
+  <input type="email" id="email" required placeholder="you@gmail.com"></p>
+  <button type="submit">Send verification link</button>
+</form>
+<div id="confirm" style="display:none">
+  <p>Confirming your deletion request…</p>
+</div>
+<p id="msg"></p>
+
+<script>
+const API = "https://api.paisatrack.ad-venture.in";
+const msg = document.getElementById("msg");
+const params = new URLSearchParams(location.search);
+
+if (params.get("token")) {
+  document.getElementById("form").style.display = "none";
+  document.getElementById("confirm").style.display = "block";
+  fetch(API + "/v1/web/deletion-confirm", {
+    method: "POST", headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ token: params.get("token") })
+  }).then(r => r.json()).then(d => {
+    msg.textContent = d.status === "DELETION_PENDING"
+      ? "Your account deletion is scheduled. Sign in within 7 days if you change your mind."
+      : (d.error || "This link is expired or invalid.");
+  }).catch(() => msg.textContent = "Something went wrong. Please try again.");
+} else {
+  document.getElementById("form").addEventListener("submit", e => {
+    e.preventDefault();
+    fetch(API + "/v1/web/deletion-request", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({ email: document.getElementById("email").value })
+    }).then(r => r.json()).then(d => msg.textContent = d.message || "Check your inbox.")
+      .catch(() => msg.textContent = "Something went wrong. Please try again.");
+  });
+}
+</script>
+</body>
+</html>

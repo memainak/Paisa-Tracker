@@ -1,0 +1,3 @@
+# app-ads.txt for ad-venture.in — Google AdMob authorized seller declaration (§7)
+# REPLACE pub-0000000000000000 with your real AdMob publisher ID before publishing.
+google.com, pub-0000000000000000, DIRECT, f08c47fec0942fa0
