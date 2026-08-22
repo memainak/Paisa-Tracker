@@ -12,7 +12,7 @@
 </head>
 <body>
 <h1>Paisa Tracker — Privacy Policy</h1>
-<p><strong>Effective date:</strong> 16 August 2026 · <strong>Notice version:</strong> 3.0</p>
+<p><strong>Effective date:</strong> 22 August 2026 · <strong>Notice version:</strong> 3.1</p>
 <p>Paisa Tracker ("the App") is operated by <strong>Ad-Venture(ad-venture.in)</strong>
 ("we", the Data Fiduciary under India's Digital Personal Data Protection Act, 2023).
 Contact: <a href="mailto:support@ad-venture.in">support@ad-venture.in</a>.</p>
@@ -30,6 +30,13 @@ to a specific feature:</p>
 grant location, to turn a location into a country.</li>
 <li><strong>open.er-api.com</strong> — only when the in-app currency converter fetches exchange rates. No
 information about you is sent with the request.</li>
+<li><strong>Firebase Cloud Messaging</strong> — so we can send occasional app news and tips. This registers an
+anonymous device token with Google. It is not linked to you and carries none of your entries.</li>
+<li><strong>Firebase Analytics</strong> — records which screens and features are used, and basic device
+information, so we can see what to improve. It records <em>that</em> you opened a screen, never the amounts,
+categories, or notes on it.</li>
+<li><strong>Firebase Crashlytics</strong> — sends a stack trace and device state when the App crashes, so we
+can fix it.</li>
 </ul>
 <div class="callout">
 <p style="margin:0"><strong>Bank and UPI alerts stay on your device.</strong> If you switch on "Log from
@@ -47,13 +54,18 @@ your device, is never transmitted to us or anyone else, and never becomes an ent
 <tr><td>A message you share into the App</td><td>Only a message you explicitly share to Paisa Tracker from another app</td><td>Reading the amount out of a transaction SMS you chose to hand over</td><td><strong>No</strong> — processed on device only</td></tr>
 <tr><td>Approximate (coarse) location</td><td>Your device's last known location — only if you turn on automatic currency detection and grant location</td><td>Picking the right currency symbol and number format for where you are</td><td>Yes — the coordinates are sent to Google's geocoding service to resolve a country. Not stored by us.</td></tr>
 <tr><td>Currency exchange rates</td><td>open.er-api.com</td><td>The in-app currency converter</td><td>A request is made to fetch rates. <strong>No data about you is included</strong> — see §7.</td></tr>
+<tr><td>App usage events (screens opened, features used), app version, device model, OS version, country, and a Google-generated app-instance ID</td><td>Firebase Analytics SDK</td><td>Understanding which features are used so we know what to build and fix</td><td>Yes — sent to Google. <strong>Never includes your entries</strong> — no amounts, categories, notes, or receipt images.</td></tr>
+<tr><td>Crash reports — stack trace, app version, device model, OS version, and app state at the moment of the crash</td><td>Firebase Crashlytics SDK</td><td>Diagnosing and fixing crashes</td><td>Yes — sent to Google when the App crashes.</td></tr>
+<tr><td>Push registration token</td><td>Firebase Cloud Messaging, when the App first runs</td><td>Delivering app news and tips (<em>Settings → App news and tips</em>)</td><td>Yes — an anonymous device identifier is registered with Google. We hold no copy and cannot use it to identify you.</td></tr>
 <tr><td>Advertising ID &amp; device/ad-interaction data</td><td>Google AdMob SDK</td><td>Showing ads (non-personalised if you decline personalisation)</td><td>Yes — sent to Google</td></tr>
 <tr><td>Consent choice (personalised vs. non-personalised ads)</td><td>Google UMP consent form</td><td>Ad-privacy compliance (GDPR/DPDP)</td><td>Recorded on device / by Google's consent SDK</td></tr>
 </table>
 <p>We do <strong>not</strong> collect your name, email address, phone number, contacts, or email account. We do not
 read your SMS inbox — the App holds no SMS permission and cannot open your messages; it sees a message only if you
-deliberately share one into it. We do not operate analytics or crash-reporting that identifies you. We never sell
-your data, and your individual expense entries are <strong>never</strong> shared with any advertising partner.</p>
+deliberately share one into it. We use analytics and crash reporting, described above; these measure how the App is
+used and why it fails, and are keyed to a resettable app-instance ID rather than to your identity. We never sell
+your data, and your individual expense entries are <strong>never</strong> shared with any advertising or analytics
+partner.</p>
 
 <h2>3. Reading bank and UPI alerts (optional)</h2>
 <p>Paisa Tracker can offer to log a transaction when your bank or UPI app shows an alert, so you don't have to retype
@@ -87,8 +99,10 @@ period or everything, or remove all data by uninstalling the App or clearing its
 <em>Android Settings → Apps → Paisa Tracker → Storage → Clear data</em>. This permanently deletes everything, as we
 hold no server copy.</li>
 <li><strong>Withdrawing consent:</strong> every optional feature can be switched off independently — notification
-reading and automatic currency detection in <em>Settings</em>, location and microphone in your Android permission
-settings, and ad personalisation through the in-app consent form.</li>
+reading, automatic currency detection, app news notifications, and usage/crash reporting in <em>Settings</em>,
+location and microphone in your Android permission settings, and ad personalisation through the in-app consent
+form. Switching off <em>Settings → Usage data and crash reports</em> stops analytics and crash collection on your
+device from that moment.</li>
 <li><strong>Advertising data:</strong> managed through your device ad settings and the in-app consent choice above.</li>
 <li><strong>Grievance:</strong> Grievance Officer — <strong>Mainak Sinha</strong>,
 <a href="mailto:mainak@ad-venture.in">mainak@ad-venture.in</a>. Complaints are acknowledged immediately and
@@ -99,7 +113,8 @@ answered within 15 days. If unsatisfied, you may approach the Data Protection Bo
 <p>Your entries are retained on your device until you delete them or uninstall the App. We hold no server-side copy
 to retain or purge. Transaction alert text is not retained at all — it is examined for an amount and discarded;
 only an entry you confirm is saved. Exchange rates are cached on your device and refreshed periodically.
-Advertising data is retained by Google per its own policies.</p>
+Advertising data is retained by Google per its own policies, as are analytics events and crash reports (Firebase
+default retention; crash reports are kept up to 90 days).</p>
 
 <h2>7. Third parties</h2>
 <ul>
@@ -114,6 +129,17 @@ grant location permission. Android resolves your coordinates into a country thro
 the App keeps only the resulting currency choice. If you leave location off, your SIM and region settings are used
 instead and no coordinates are involved.
 <a href="https://policies.google.com/privacy">Google privacy policy</a>.</li>
+<li><strong>Firebase Analytics (Google)</strong> — records app usage events and device information against a
+Google-generated app-instance ID. We use it to see which features are worth investing in and which are being
+missed. It never receives your entries. <a href="https://firebase.google.com/support/privacy">Firebase privacy</a>.</li>
+<li><strong>Firebase Crashlytics (Google)</strong> — receives a stack trace and device state when the App
+crashes. Reports are technical diagnostics, not content: they describe what the code was doing, not what you had
+recorded. <a href="https://firebase.google.com/support/privacy">Firebase privacy</a>.</li>
+<li><strong>Firebase Cloud Messaging (Google)</strong> — delivers the App's news-and-tips notifications. Google
+issues an anonymous registration token to your device so a message can reach it. We send messages to all
+subscribed devices at once and receive no list of who they are; we cannot target you individually, and no entry
+data is ever included. Switch it off in <em>Settings → App news and tips</em> and the token is unsubscribed.
+<a href="https://firebase.google.com/support/privacy">Firebase privacy</a>.</li>
 <li><strong>open.er-api.com</strong> — supplies exchange rates for the in-app currency converter. The App requests
 a fixed, public rate table; it sends no account, device, or entry information, and not even the currency you
 selected. As with any internet request, the operator of that service can see your IP address.
@@ -133,6 +159,9 @@ store of them to breach.</p>
 <h2>10. Changes</h2>
 <p>We will note material changes in-app and update the notice version above.</p>
 <ul>
+<li><strong>Version 3.1 (22 August 2026)</strong> — added push notifications for app news and tips, delivered
+through Firebase Cloud Messaging and switchable off in Settings; added Firebase Analytics and Crashlytics, with a
+single Settings switch to withdraw consent for both.</li>
 <li><strong>Version 3.0 (16 August 2026)</strong> — documented voice input; added optional reading of bank/UPI
 notification alerts (on-device only, off by default); added optional location-based currency detection; added the
 currency converter's exchange-rate lookup.</li>
